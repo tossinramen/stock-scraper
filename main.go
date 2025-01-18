@@ -21,8 +21,11 @@ type Stock struct {
 
 func main() {
 	tickers := []string{
-		"NVDA",
+		"NVO",
+		"TSM",
 		"TSLA",
+		"NVDA",
+		
 	}
 
 	var stocks []Stock
