@@ -14,7 +14,7 @@ company, price, change string
 
 func main(){
 	ticker := []string{
-		"NVDA",
+		"ETH",
 		"AVGO",
 		"DIS",
 		"PANW",
@@ -23,7 +23,7 @@ func main(){
 		"GOOG",
 		"TSLA",
 		"AB",
-		"ETH",
+		"NVDA",
 		"BTC",
 
 	}
@@ -37,15 +37,15 @@ func main(){
 	c.OnError(func(_ *colly.Response, err error){
 		log.Println("Something went wrong ", err)
 	})
-	c.OnHTML("div#quote-header-info", func(e *colly.HTMLElement){
+	c.OnHTML("body", func(e *colly.HTMLElement){ // Changed to body because there is no div#quote-header-info
 		stock := Stock{}
 		stock.company = e.ChildText("h1")
 		fmt.Println("Company:", stock.company)
-		stock.price = e.ChildText("fin-streamer[data-field='regularMarketPrice']")
+		stock.price = e.ChildText("fin-streamer[data-symbol]")
 		fmt.Println("Price:", stock.price)
 		stock.change = e.ChildText("fin-streamer[data-field='regularMarketChangePercent']")
 		fmt.Println("Change:", stock.change)
-
+	
 		stocks = append(stocks, stock)
 	})
 	c.Wait()
